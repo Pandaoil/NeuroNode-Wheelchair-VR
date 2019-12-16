@@ -48,7 +48,7 @@ public class WheelchairScript : MonoBehaviour
             RigidBody.angularVelocity = new Vector3(0, 1.0f, 0);
         }
 
-       /* if(ForwardVector.z > 0.0f)
+       /*if(ForwardVector.z > 0.0f)
         {
             //the body of this if statement rotates the transform of each element of the pivots array so that the wheels are rotating on a positive vector
             pivots[0].transform.Rotate(Vector3.down * RigidBody.velocity.magnitude);

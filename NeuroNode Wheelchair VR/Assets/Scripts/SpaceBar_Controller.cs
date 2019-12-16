@@ -9,7 +9,7 @@ public class SpaceBar_Controller : MonoBehaviour
     {
         Forward,
         R_Clockwise,
-        R_Anticloise,
+        R_Anticlockwise,
         Reverse,
         Mode,
         Slow,
@@ -47,15 +47,18 @@ public class SpaceBar_Controller : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             Active = true;
-
+            
             if(Active == true)
             {
                 Timer = 0;
             }
+
+            Debug.Log("Pressing Space Bar");
         }
         else
         {
             Active = false;
+            Debug.Log("Not Pressing Space Bar");
         }
 
         switch (ActiveState)
@@ -94,13 +97,13 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Timer >= SwitchSpeed)
                     {
                         //This will change the Active State to be the next one
-                        ActiveState = ScanAction.R_Anticloise;
+                        ActiveState = ScanAction.R_Anticlockwise;
                         Timer = 0;
                     }
                 }
                 break;
 
-            case ScanAction.R_Anticloise:
+            case ScanAction.R_Anticlockwise:
                 {
                     if (Input.GetKey(KeyCode.Space))
                     {
