@@ -10,7 +10,12 @@ public class SpaceBar_Controller : MonoBehaviour
         Forward,
         R_Clockwise,
         R_Anticloise,
-        Reverse
+        Reverse,
+        Mode,
+        Slow,
+        Med,
+        Fast,
+        Max
     }
 
     public GameObject[] pivots;
@@ -128,7 +133,101 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Timer >= SwitchSpeed)
                     {
                         //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Mode;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Mode:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        ActiveState = ScanAction.Slow;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
                         ActiveState = ScanAction.Forward;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Slow:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 3.0f;
+                        ActiveState = ScanAction.Forward;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3.0f)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Med;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Med:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 2.0f;
+                        ActiveState = ScanAction.Forward;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3.0f)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Fast;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Fast:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 1.0f;
+                        ActiveState = ScanAction.Forward;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Max;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Max:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 0.5f;
+                        ActiveState = ScanAction.Forward;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Slow;
                         Timer = 0;
                     }
                 }
