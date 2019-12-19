@@ -43,7 +43,9 @@ public class SpaceBar_Controller : MonoBehaviour
     }
 
     public GameObject[] pivots;
+    public AudioSource Sound;
     public Rigidbody RigidBody;
+    
 
     public float Speed = 70;
     public float Drag = 1;
@@ -51,10 +53,11 @@ public class SpaceBar_Controller : MonoBehaviour
     public float Timer = 0;
     public float SwitchSpeed = 3.0f;
     private float temp;
+    public float decay;
 
 
     public bool Active;
-    public bool translate;
+    public bool translate = false;
 
     private Vector3 ForwardVector;
 
@@ -70,11 +73,27 @@ public class SpaceBar_Controller : MonoBehaviour
         //the inverse transform direction allows for the velocity
         ForwardVector = transform.InverseTransformDirection(RigidBody.velocity);
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Sound.Play();
+        }
+
+        void Delay()
+        {
+            decay -= Time.deltaTime;
+            
+            if(decay < 0)
+            {
+                decay = 0;
+                translate = false;
+            }
+        }
+
         if (Input.GetKey(KeyCode.Space))
         {
             Active = true;
-            
-            if(Active == true)
+
+            if (Active == true)
             {
                 Timer = 0;
             }
@@ -119,6 +138,11 @@ public class SpaceBar_Controller : MonoBehaviour
                     {
                         //The body of this if statement will cease all force applied to the rigidbody and then apply a force on the inverse vector
                         RigidBody.angularVelocity = new Vector3(0, 1.0f, 0);
+
+                        if (Input.GetKeyUp(KeyCode.Space))
+                        {
+                            ActiveState = ScanAction.Forward;
+                        }
                     }
 
                     Timer += Time.deltaTime;
@@ -138,6 +162,11 @@ public class SpaceBar_Controller : MonoBehaviour
                     {
                         //The body of this if statement will cease all force applied to the rigidbody and then apply a force on the inverse vector
                         RigidBody.angularVelocity = new Vector3(0, -1.0f, 0);
+
+                        if (Input.GetKeyUp(KeyCode.Space))
+                        {
+                            ActiveState = ScanAction.Forward;
+                        }
                     }
 
                     Timer += Time.deltaTime;
@@ -158,6 +187,11 @@ public class SpaceBar_Controller : MonoBehaviour
                         //The body of this if statement will cease all angular velocity and apply a backward vector
                         RigidBody.angularVelocity = Vector3.zero;
                         RigidBody.AddForce(-transform.forward * Speed * Time.deltaTime, ForceMode.Impulse);
+
+                        if (Input.GetKeyUp(KeyCode.Space))
+                        {
+                            ActiveState = ScanAction.Forward;
+                        }
                     }
 
                     Timer += Time.deltaTime;
@@ -196,6 +230,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         ActiveState = ScanAction.Forward_P;
+                        Sound.Play();
                     }
 
                     Timer += Time.deltaTime;
@@ -290,10 +325,18 @@ public class SpaceBar_Controller : MonoBehaviour
             case ScanAction.Forward_P:
                 {
 
+
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        ActiveState = ScanAction.One_Meter;
-                        Timer = 0;
+                        decay = 0.01f;
+                        translate = true;
+                        Delay();
+
+                        if (decay == 0 && !translate)
+                        {
+                            ActiveState = ScanAction.One_Meter;
+                            Timer = 0;
+                        }
                     }
 
                     Timer += Time.deltaTime;
@@ -317,9 +360,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Translate(0, 0, 1 * Time.deltaTime);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 1)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -348,9 +392,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Translate(0, 0, 1 * Time.deltaTime);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 5)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -378,9 +423,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Translate(0, 0, 1 * Time.deltaTime);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 0.1)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -404,8 +450,16 @@ public class SpaceBar_Controller : MonoBehaviour
 
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        ActiveState = ScanAction.Ninety_R;
-                        Timer = 0;
+                        decay = 0.015f;
+                        translate = true;
+                        Delay();
+
+                        if (decay == 0 && !translate)
+                        {
+                            ActiveState = ScanAction.Ninety_R;
+                            Timer = 0;
+                        }
+
                     }
 
                     Timer += Time.deltaTime;
@@ -429,9 +483,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Rotate(0, 10 * Time.deltaTime, 0 );
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 9)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -459,9 +514,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Rotate(0, 10 * Time.deltaTime, 0);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 4.5f)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -489,9 +545,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Rotate(0, 10 * Time.deltaTime, 0);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 1)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -515,8 +572,20 @@ public class SpaceBar_Controller : MonoBehaviour
 
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        ActiveState = ScanAction.Ninety_L;
-                        Timer = 0;
+
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            decay = 0.015f;
+                            translate = true;
+                            Delay();
+
+                            if (decay == 0 && !translate)
+                            {
+                                ActiveState = ScanAction.Ninety_L;
+                                Timer = 0;
+                            }
+
+                        }
                     }
 
                     Timer += Time.deltaTime;
@@ -540,9 +609,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Rotate(0, -10 * Time.deltaTime, 0);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 9)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -570,9 +640,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Rotate(0, -10 * Time.deltaTime, 0);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 4.5f)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -600,9 +671,10 @@ public class SpaceBar_Controller : MonoBehaviour
                             transform.Rotate(0, -10 * Time.deltaTime, 0);
                             temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 1)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -626,8 +698,20 @@ public class SpaceBar_Controller : MonoBehaviour
 
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        ActiveState = ScanAction.One_Meter_R;
-                        Timer = 0;
+
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            decay = 0.015f;
+                            translate = true;
+                            Delay();
+
+                            if (decay == 0 && !translate)
+                            {
+                                ActiveState = ScanAction.One_Meter;
+                                Timer = 0;
+                            }
+
+                        }
                     }
 
                     Timer += Time.deltaTime;
@@ -649,11 +733,11 @@ public class SpaceBar_Controller : MonoBehaviour
                         if (Active == true)
                         {
                             transform.Translate(0, 0, -1 * Time.deltaTime);
-                            temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 1)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -680,11 +764,11 @@ public class SpaceBar_Controller : MonoBehaviour
                         if (Active == true)
                         {
                             transform.Translate(0, 0, -1 * Time.deltaTime);
-                            temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 5)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -710,11 +794,11 @@ public class SpaceBar_Controller : MonoBehaviour
                         if (Active == true)
                         {
                             transform.Translate(0, 0, -1 * Time.deltaTime);
-                            temp += Time.deltaTime;
                             Timer = 0;
+
                             if (temp >= 0.1)
                             {
-                                ActiveState = ScanAction.Mode2;
+                                ActiveState = ScanAction.Forward_P;
                                 Active = false;
                                 temp = 0;
                             }
@@ -732,6 +816,8 @@ public class SpaceBar_Controller : MonoBehaviour
 
                 }
                 break;
+
+            //-------------------------------------------MODE2 SETTINGS-----------------------------------------//
 
             case ScanAction.Mode2:
                 {
@@ -763,7 +849,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Timer >= 3.0f)
                     {
                         //This will change the Active State to be the next one
-                        ActiveState = ScanAction.Slow;
+                        ActiveState = ScanAction.Slow2;
                         Timer = 0;
                     }
                 }
@@ -820,7 +906,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Timer >= 3)
                     {
                         //This will change the Active State to be the next one
-                        ActiveState = ScanAction.Max;
+                        ActiveState = ScanAction.Max2;
                         Timer = 0;
                     }
                 }
