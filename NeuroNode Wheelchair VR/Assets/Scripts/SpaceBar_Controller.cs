@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,15 +8,38 @@ public class SpaceBar_Controller : MonoBehaviour
     [SerializeField]
     public enum ScanAction
     {
+        Mode,
+        Mode2,
         Forward,
         R_Clockwise,
         R_Anticlockwise,
         Reverse,
-        Mode,
+        Presets,
+        Discrete,
         Slow,
+        Slow2,
         Med,
+        Med2,
         Fast,
-        Max
+        Fast2,
+        Max,
+        Max2,
+        Forward_P,
+        Clockwise_P,
+        Anticlockwise_P,
+        Reverse_P,
+        Five_Meter,
+        One_Meter,
+        Ten_Centimeter,
+        Ninety_L,
+        Fourty_Five_L,
+        Ten_L,
+        Ninety_R,
+        Fourty_Five_R,
+        Ten_R,
+        One_Meter_R,
+        Five_Meter_R,
+        Ten_Centimeter_R
     }
 
     public GameObject[] pivots;
@@ -28,7 +52,9 @@ public class SpaceBar_Controller : MonoBehaviour
     public float SwitchSpeed = 3.0f;
     private float temp;
 
+
     public bool Active;
+    public bool translate;
 
     private Vector3 ForwardVector;
 
@@ -63,8 +89,11 @@ public class SpaceBar_Controller : MonoBehaviour
 
         switch (ActiveState)
         {
+            //-------------------------------------------------DISCRETE INPUT---------------------------------------------//
+
             case ScanAction.Forward:
                 {
+                    
                     if (Input.GetKey(KeyCode.Space))
                     {
                         //The body of this if statement will cease all angular velocity and apply a forward vector
@@ -142,11 +171,13 @@ public class SpaceBar_Controller : MonoBehaviour
                 }
                 break;
 
+            //--------------------------------------------------MODE SETTINGS----------------------------------------------//
+
             case ScanAction.Mode:
                 {
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        ActiveState = ScanAction.Slow;
+                        ActiveState = ScanAction.Presets;
                     }
 
                     Timer += Time.deltaTime;
@@ -160,12 +191,30 @@ public class SpaceBar_Controller : MonoBehaviour
                 }
                 break;
 
+            case ScanAction.Presets:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        ActiveState = ScanAction.Forward_P;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3.0f)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Slow;
+                        Timer = 0;
+                    }
+                }
+                break;
+
             case ScanAction.Slow:
                 {
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         SwitchSpeed = 3.0f;
-                        ActiveState = ScanAction.Forward;
+                        ActiveState = ScanAction.Mode;
                     }
 
                     Timer += Time.deltaTime;
@@ -184,7 +233,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         SwitchSpeed = 2.0f;
-                        ActiveState = ScanAction.Forward;
+                        ActiveState = ScanAction.Mode;
                     }
 
                     Timer += Time.deltaTime;
@@ -203,7 +252,567 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         SwitchSpeed = 1.0f;
+                        ActiveState = ScanAction.Mode;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Max;
+                        Timer = 0;
+                    }
+                }
+                break;
+           
+            case ScanAction.Max:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 0.5f;
+                        ActiveState = ScanAction.Mode;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Slow;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            //-----------------------------------------------PRESET INPUT-------------------------------------------------//
+
+            case ScanAction.Forward_P:
+                {
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        ActiveState = ScanAction.One_Meter;
+                        Timer = 0;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Clockwise_P;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.One_Meter:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if(Active == true)
+                        {
+                            transform.Translate(0, 0, 1 * Time.deltaTime);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 1)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Ten_Centimeter;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Five_Meter:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Translate(0, 0, 1 * Time.deltaTime);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 5)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.One_Meter;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Ten_Centimeter:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Translate(0, 0, 1 * Time.deltaTime);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 0.1)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Five_Meter;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Clockwise_P:
+                {
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        ActiveState = ScanAction.Ninety_R;
+                        Timer = 0;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Anticlockwise_P;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Ninety_R:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Rotate(0, 10 * Time.deltaTime, 0 );
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 9)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Fourty_Five_R;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Fourty_Five_R:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Rotate(0, 10 * Time.deltaTime, 0);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 4.5f)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Ten_R;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Ten_R:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Rotate(0, 10 * Time.deltaTime, 0);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 1)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Ninety_R;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Anticlockwise_P:
+                {
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        ActiveState = ScanAction.Ninety_L;
+                        Timer = 0;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Reverse_P;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Ninety_L:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Rotate(0, -10 * Time.deltaTime, 0);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 9)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Fourty_Five_L;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Fourty_Five_L:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Rotate(0, -10 * Time.deltaTime, 0);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 4.5f)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Ten_L;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Ten_L:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Rotate(0, -10 * Time.deltaTime, 0);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 1)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Ninety_L;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Reverse_P:
+                {
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        ActiveState = ScanAction.One_Meter_R;
+                        Timer = 0;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Mode2;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.One_Meter_R:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Translate(0, 0, -1 * Time.deltaTime);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 1)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Ten_Centimeter;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Five_Meter_R:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Translate(0, 0, -1 * Time.deltaTime);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 5)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.One_Meter;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Ten_Centimeter_R:
+                {
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        if (Active == true)
+                        {
+                            transform.Translate(0, 0, -1 * Time.deltaTime);
+                            temp += Time.deltaTime;
+                            Timer = 0;
+                            if (temp >= 0.1)
+                            {
+                                ActiveState = ScanAction.Mode2;
+                                Active = false;
+                                temp = 0;
+                            }
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Five_Meter_R;
+                        Timer = 0;
+                    }
+
+                }
+                break;
+
+            case ScanAction.Mode2:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        ActiveState = ScanAction.Discrete;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Forward_P;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Discrete:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
                         ActiveState = ScanAction.Forward;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3.0f)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Slow;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Slow2:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 3.0f;
+                        ActiveState = ScanAction.Mode2;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3.0f)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Med2;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Med2:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 2.0f;
+                        ActiveState = ScanAction.Mode2;
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= 3.0f)
+                    {
+                        //This will change the Active State to be the next one
+                        ActiveState = ScanAction.Fast2;
+                        Timer = 0;
+                    }
+                }
+                break;
+
+            case ScanAction.Fast2:
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SwitchSpeed = 1.0f;
+                        ActiveState = ScanAction.Mode2;
                     }
 
                     Timer += Time.deltaTime;
@@ -217,12 +826,12 @@ public class SpaceBar_Controller : MonoBehaviour
                 }
                 break;
 
-            case ScanAction.Max:
+            case ScanAction.Max2:
                 {
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         SwitchSpeed = 0.5f;
-                        ActiveState = ScanAction.Forward;
+                        ActiveState = ScanAction.Mode2;
                     }
 
                     Timer += Time.deltaTime;
@@ -230,11 +839,11 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Timer >= 3)
                     {
                         //This will change the Active State to be the next one
-                        ActiveState = ScanAction.Slow;
+                        ActiveState = ScanAction.Slow2;
                         Timer = 0;
                     }
                 }
                 break;
-        }
+        }   
     }
 }
