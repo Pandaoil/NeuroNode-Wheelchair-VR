@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpaceBar_Controller : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class SpaceBar_Controller : MonoBehaviour
 
     public GameObject[] pivots;
     public AudioSource Sound;
+    public AudioSource Tick;
     public Rigidbody RigidBody;
 
     public GameObject Mode;
@@ -67,6 +69,9 @@ public class SpaceBar_Controller : MonoBehaviour
     public GameObject Ninety_Degrees;
     public GameObject Fourty_Five_Degrees;
     public GameObject Ten_Degrees;
+
+    public Text Display;
+    public Text SwitchTime;
 
     public float Speed = 70;
     public float Drag = 1;
@@ -92,6 +97,9 @@ public class SpaceBar_Controller : MonoBehaviour
     {
         //the inverse transform direction allows for the velocity
         ForwardVector = transform.InverseTransformDirection(RigidBody.velocity);
+
+        Display.text = Timer.ToString();
+        SwitchTime.text = SwitchSpeed.ToString();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -149,9 +157,9 @@ public class SpaceBar_Controller : MonoBehaviour
                         Clockwise.SetActive(true);
                         ActiveState = ScanAction.R_Clockwise;
                         Timer = 0;
-
+                        Tick.Play();
                     }
-                    
+
                 }
                 break;
 
@@ -177,6 +185,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Anticlockwise.SetActive(true);
                         ActiveState = ScanAction.R_Anticlockwise;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -203,6 +212,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Reverse.SetActive(true);
                         ActiveState = ScanAction.Reverse;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -230,6 +240,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Mode.SetActive(true);
                         ActiveState = ScanAction.Mode;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -254,6 +265,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Forward.SetActive(true);
                         ActiveState = ScanAction.Forward;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -277,6 +289,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Preset.SetActive(false);
                         Slow.SetActive(true);
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -300,6 +313,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Med.SetActive(true);
                         ActiveState = ScanAction.Med;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -323,6 +337,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Fast.SetActive(true);
                         ActiveState = ScanAction.Fast;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -346,6 +361,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Max.SetActive(true);
                         ActiveState = ScanAction.Max;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -369,6 +385,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         //This will change the Active State to be the next one
                         ActiveState = ScanAction.Presets;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -403,6 +420,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Clockwise_P.SetActive(true);
                         ActiveState = ScanAction.Clockwise_P;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -439,6 +457,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Ten_Centimeters.SetActive(true);
                         ActiveState = ScanAction.Ten_Centimeter;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -474,6 +493,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         One_Meter.SetActive(true);
                         ActiveState = ScanAction.One_Meter;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -509,6 +529,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Five_Meters.SetActive(true);
                         ActiveState = ScanAction.Five_Meter;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -542,6 +563,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Anticlockwise_P.SetActive(true);
                         ActiveState = ScanAction.Anticlockwise_P;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -577,6 +599,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Fourty_Five_Degrees.SetActive(true);
                         ActiveState = ScanAction.Fourty_Five_R;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -599,6 +622,7 @@ public class SpaceBar_Controller : MonoBehaviour
                                 Forward_P.SetActive(true);
                                 Active = false;
                                 temp = 0;
+                                Tick.Play();
                             }
                         }
                     }
@@ -647,6 +671,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Ninety_Degrees.SetActive(true);
                         ActiveState = ScanAction.Ninety_R;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -684,6 +709,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Reverse_P.SetActive(true);
                         ActiveState = ScanAction.Reverse_P;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -719,6 +745,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Fourty_Five_Degrees.SetActive(true);
                         ActiveState = ScanAction.Fourty_Five_L;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -754,6 +781,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Ten_Degrees.SetActive(true);
                         ActiveState = ScanAction.Ten_L;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -789,6 +817,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Ninety_Degrees.SetActive(true);
                         ActiveState = ScanAction.Ninety_L;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -826,6 +855,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Mode.SetActive(true);
                         ActiveState = ScanAction.Mode2;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -861,6 +891,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Ten_Centimeters.SetActive(true);
                         ActiveState = ScanAction.Ten_Centimeter;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -895,6 +926,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         One_Meter.SetActive(true);
                         ActiveState = ScanAction.One_Meter;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -929,6 +961,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Five_Meters.SetActive(true);
                         ActiveState = ScanAction.Five_Meter_R;
                         Timer = 0;
+                        Tick.Play();
                     }
 
                 }
@@ -954,6 +987,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Forward_P.SetActive(true);
                         ActiveState = ScanAction.Forward_P;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -976,6 +1010,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Slow.SetActive(true);
                         ActiveState = ScanAction.Slow2;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -999,6 +1034,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Med.SetActive(true);
                         ActiveState = ScanAction.Med2;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -1022,6 +1058,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Fast.SetActive(true);
                         ActiveState = ScanAction.Fast2;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -1045,6 +1082,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Max.SetActive(true);
                         ActiveState = ScanAction.Max2;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
@@ -1068,6 +1106,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         Discrete.SetActive(true);
                         ActiveState = ScanAction.Discrete;
                         Timer = 0;
+                        Tick.Play();
                     }
                 }
                 break;
