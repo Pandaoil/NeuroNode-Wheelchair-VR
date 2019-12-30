@@ -2331,7 +2331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.87936175, y: 0.8506359}
   m_AnchorMax: {x: 1, y: 0.9683183}
-  m_AnchoredPosition: {x: -0, y: -0.000031756}
+  m_AnchoredPosition: {x: 0, y: -0.000031754375}
   m_SizeDelta: {x: 12.02835, y: 11.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1303135056283978129
@@ -2421,7 +2421,7 @@ GameObject:
   - component: {fileID: 2724273822633899839}
   - component: {fileID: 3397233906220419325}
   - component: {fileID: 5386495958611337114}
-  - component: {fileID: 416000974388828778}
+  - component: {fileID: 2425688073815147991}
   m_Layer: 0
   m_Name: Wheelchair_RIG
   m_TagString: Player
@@ -2507,7 +2507,7 @@ MonoBehaviour:
   Ten_Degrees: {fileID: 6607683946052500833}
   Display: {fileID: 3944534261301136541}
   SwitchTime: {fileID: 4205388188338958740}
-  Speed: 70
+  Speed: 2
   Drag: 1
   AngularDrag: 0.05
   Timer: 0
@@ -2541,7 +2541,7 @@ Rigidbody:
   m_GameObject: {fileID: 3397233906220419312}
   serializedVersion: 2
   m_Mass: 5
-  m_Drag: 1
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -2559,10 +2559,10 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.1
-  m_Height: 1
+  m_Height: 0.8
   m_Direction: 0
   m_Center: {x: 0, y: 0.1, z: 0.5}
---- !u!136 &416000974388828778
+--- !u!136 &2425688073815147991
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2573,7 +2573,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.1
-  m_Height: 1
+  m_Height: 0.8
   m_Direction: 0
   m_Center: {x: 0, y: 0.1, z: -0.3}
 --- !u!1 &3397233908017358144
@@ -2587,7 +2587,6 @@ GameObject:
   - component: {fileID: 3397233908017758492}
   - component: {fileID: 3364299261955558554}
   - component: {fileID: 3397233906420927189}
-  - component: {fileID: 3397233906420927188}
   m_Layer: 0
   m_Name: Controller (left)
   m_TagString: LeftHand
@@ -2602,9 +2601,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3397233908017358144}
-  m_LocalRotation: {x: -0.0000000102171995, y: -0.09027261, z: -0.0000000049911435,
-    w: 0.99591714}
-  m_LocalPosition: {x: -1.7737106, y: 1.0000001, z: 6.5515985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.0000001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3397233908017782032}
@@ -2670,19 +2668,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3397233906420927188
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397233908017358144}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3397233908017426546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,7 +2886,6 @@ GameObject:
   - component: {fileID: 3397233908017702336}
   - component: {fileID: 3364299262733013778}
   - component: {fileID: 3397233906882763094}
-  - component: {fileID: 3397233906882763089}
   m_Layer: 0
   m_Name: Controller (right)
   m_TagString: RightHand
@@ -2916,9 +2900,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3397233908017459046}
-  m_LocalRotation: {x: -0.0000000102171995, y: -0.09027261, z: -0.0000000049911435,
-    w: 0.99591714}
-  m_LocalPosition: {x: -1.7737106, y: 1.0000001, z: 6.5515985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.0000001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3397233908017777804}
@@ -2984,19 +2967,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3397233906882763089
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397233908017459046}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3397662163801470442
 GameObject:
   m_ObjectHideFlags: 0
@@ -6345,7 +6315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.02540549, y: 0.8506359}
   m_AnchorMax: {x: 0.19579539, y: 0.9683183}
-  m_AnchoredPosition: {x: 0.00019, y: -0.000034953}
+  m_AnchoredPosition: {x: 0.00019000098, y: -0.0000349544}
   m_SizeDelta: {x: 16.31759, y: 11.831}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &273739293880397964

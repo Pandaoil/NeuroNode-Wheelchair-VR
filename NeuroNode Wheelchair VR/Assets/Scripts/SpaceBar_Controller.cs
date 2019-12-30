@@ -73,7 +73,7 @@ public class SpaceBar_Controller : MonoBehaviour
     public Text Display;
     public Text SwitchTime;
 
-    public float Speed = 70;
+    public float Speed = 2;
     public float Drag = 1;
     public float AngularDrag = 0.05f;
     public float Timer = 0;
@@ -144,8 +144,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Input.GetKey(KeyCode.Space))
                     {
                         //The body of this if statement will cease all angular velocity and apply a forward vector
-                        RigidBody.angularVelocity = Vector3.zero;
-                        RigidBody.AddForce(transform.forward * Speed * Time.deltaTime, ForceMode.Impulse);
+                        transform.Translate(0, 0, 1 * Speed * Time.deltaTime);
                     }
 
                     Timer += Time.deltaTime;
@@ -168,7 +167,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Input.GetKey(KeyCode.Space))
                     {
                         //The body of this if statement will cease all force applied to the rigidbody and then apply a force on the inverse vector
-                        RigidBody.angularVelocity = new Vector3(0, 1.0f, 0);
+                        transform.Rotate(0, 10 * Speed * Time.deltaTime, 0);
 
                         if (Input.GetKeyUp(KeyCode.Space))
                         {
@@ -195,7 +194,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Input.GetKey(KeyCode.Space))
                     {
                         //The body of this if statement will cease all force applied to the rigidbody and then apply a force on the inverse vector
-                        RigidBody.angularVelocity = new Vector3(0, -1.0f, 0);
+                        transform.Rotate(0, -10 * Speed * Time.deltaTime, 0);
 
                         if (Input.GetKeyUp(KeyCode.Space))
                         {
@@ -222,8 +221,7 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Input.GetKey(KeyCode.Space))
                     {
                         //The body of this if statement will cease all angular velocity and apply a backward vector
-                        RigidBody.angularVelocity = Vector3.zero;
-                        RigidBody.AddForce(-transform.forward * Speed * Time.deltaTime, ForceMode.Impulse);
+                        transform.Translate(0, 0, -1 * Speed * Time.deltaTime);
 
                         if (Input.GetKeyUp(KeyCode.Space))
                         {
