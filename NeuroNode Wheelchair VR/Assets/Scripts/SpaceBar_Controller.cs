@@ -837,7 +837,7 @@ public class SpaceBar_Controller : MonoBehaviour
 
                             if (decay == 0 && !translate)
                             {
-                                ActiveState = ScanAction.One_Meter;
+                                ActiveState = ScanAction.One_Meter_R;
                                 Reverse_P.SetActive(false);
                                 One_Meter.SetActive(true);
                                 Timer = 0;
@@ -868,6 +868,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         if (Active == true)
                         {
                             transform.Translate(0, 0, -1 * Time.deltaTime);
+                            temp += Time.deltaTime;
                             Timer = 0;
 
                             if (temp >= 1)
@@ -887,9 +888,9 @@ public class SpaceBar_Controller : MonoBehaviour
                     if (Timer >= SwitchSpeed)
                     {
                         //This will change the Active State to be the next one
-                                                One_Meter.SetActive(false);
+                        One_Meter.SetActive(false);
                         Ten_Centimeters.SetActive(true);
-                        ActiveState = ScanAction.Ten_Centimeter;
+                        ActiveState = ScanAction.Ten_Centimeter_R;
                         Timer = 0;
                         Tick.Play();
                     }
@@ -904,13 +905,14 @@ public class SpaceBar_Controller : MonoBehaviour
                         if (Active == true)
                         {
                             transform.Translate(0, 0, -1 * Time.deltaTime);
+                            temp += Time.deltaTime;
                             Timer = 0;
 
                             if (temp >= 5)
                             {
                                 ActiveState = ScanAction.Forward_P;
-                                One_Meter.SetActive(false);
-                                Ten_Centimeters.SetActive(true);
+                                Five_Meters.SetActive(false);
+                                Forward_P.SetActive(true);
                                 Active = false;
                                 temp = 0;
                             }
@@ -924,7 +926,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         //This will change the Active State to be the next one
                         Five_Meters.SetActive(false);
                         One_Meter.SetActive(true);
-                        ActiveState = ScanAction.One_Meter;
+                        ActiveState = ScanAction.One_Meter_R;
                         Timer = 0;
                         Tick.Play();
                     }
@@ -939,6 +941,7 @@ public class SpaceBar_Controller : MonoBehaviour
                         if (Active == true)
                         {
                             transform.Translate(0, 0, -1 * Time.deltaTime);
+                            temp += Time.deltaTime;
                             Timer = 0;
 
                             if (temp >= 0.1)
