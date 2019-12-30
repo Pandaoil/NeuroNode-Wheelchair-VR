@@ -65,7 +65,7 @@ public class AI_Movement : MonoBehaviour
                 timer = 0;
             }
 
-            if(timer >= Random.Range(1, 100) || i == 0)
+            if(timer >= Random.Range(1, 1000) || i == 0)
             {
                 nav.SetDestination(randomRoamingPoint);
                 i = 1;
