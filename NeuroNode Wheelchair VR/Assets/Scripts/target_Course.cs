@@ -7,10 +7,15 @@ public class target_Course : MonoBehaviour
 {
     public bool Goal = false;
     public float time;
+    public AudioSource goal;
 
     private void OnTriggerEnter(Collider other)
     {
-        Goal = true;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Goal = true;
+            goal.Play();
+        }
     }
 
     private void Update()
