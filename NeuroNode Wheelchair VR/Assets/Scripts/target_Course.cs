@@ -31,8 +31,9 @@ public class target_Course : MonoBehaviour
 
         if(time >= 10.0f)
         {
-         //Scene Switcher go here when we have a Main Menu
-         Debug.Log("Back to Menu");
+            //Scene Switcher go here when we have a Main Menu
+            SceneManager.LoadScene("Main Menu");
+            Debug.Log("Back to Menu");
         }        
     }
 }

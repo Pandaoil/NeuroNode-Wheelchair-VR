@@ -40,6 +40,7 @@ public class token_Couse : MonoBehaviour
         if (time >= 10.0f)
         {
             //Scene Switcher go here when we have a Main Menu
+            SceneManager.LoadScene("MainMenu");
             Debug.Log("Back to Menu");
         }
     }

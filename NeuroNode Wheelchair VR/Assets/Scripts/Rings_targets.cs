@@ -5,6 +5,7 @@ using UnityEngine;
 public class Rings_targets : MonoBehaviour
 {
     public GameObject ringManager;
+    public AudioSource Ding;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,12 @@ public class Rings_targets : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        ringManager.GetComponent<ring_Course>().NextRing();
-        gameObject.GetComponent<BoxCollider>().enabled = false;
+        if(other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Hello world");
+            Ding.Play();
+            ringManager.GetComponent<ring_Course>().NextRing();
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+        }
     }
 }
