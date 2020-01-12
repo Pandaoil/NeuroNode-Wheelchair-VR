@@ -7,6 +7,8 @@ public class token_Couse : MonoBehaviour
 {
     public bool Goal = false;
 
+    public AudioSource goal;
+
     public int Tokens;
 
     public float time;
@@ -22,6 +24,7 @@ public class token_Couse : MonoBehaviour
             if(Tokens == 5)
             {
                 Goal = true;
+                goal.Play();
             }
         }
     }
@@ -40,7 +43,7 @@ public class token_Couse : MonoBehaviour
         if (time >= 10.0f)
         {
             //Scene Switcher go here when we have a Main Menu
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Main Menu");
             Debug.Log("Back to Menu");
         }
     }

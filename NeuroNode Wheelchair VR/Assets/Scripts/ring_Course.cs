@@ -8,27 +8,37 @@ public class ring_Course : MonoBehaviour
     public GameObject[] nextPoint;
     public int ringcheck = 0;
     public float time;
+    public bool Goal = false;
+    public AudioSource goal;
+
 
     // Update is called once per frame
     void Update()
     {
         if(ringcheck == nextPoint.Length)
         {
-
+            goal.Play();
             // Goal Audio Trigger Goes Here
             Debug.Log("FINISHED THE RING COURSE!!!");
 
             //Start Count Down to return to Menu
-            time += Time.deltaTime;
+            Goal = true;
             ringcheck++;
+            
         }
 
-        if (time >= 10.0f)
+        if (Goal == true)
         {
-            //Scene Switcher go here when we have a Main Menu
-            SceneManager.LoadScene("Main Menu");
-            Debug.Log("Back to Menu");
+            time += Time.deltaTime;
+
+            if (time >= 10.0f)
+            {
+                //Scene Switcher go here when we have a Main Menu
+                SceneManager.LoadScene("Main Menu");
+                Debug.Log("Back to Menu");
+            }
         }
+
     }
 
     public void NextRing()
