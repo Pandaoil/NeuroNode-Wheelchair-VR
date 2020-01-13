@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.neuronodewheelchairvr.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "D:\\Users\\curio\\Documents\\GitHub\\NeuroNode-Wheelchair-VR\\NeuroNode Wheelchair VR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "NeuroNode Wheelchair VR [Testing]"
+        }
+      }
+    }
+  ]
+}
