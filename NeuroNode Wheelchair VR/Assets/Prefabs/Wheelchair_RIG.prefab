@@ -2418,6 +2418,7 @@ GameObject:
   - component: {fileID: 3397233906220419315}
   - component: {fileID: 5972223352938976331}
   - component: {fileID: 4890645714433296689}
+  - component: {fileID: 969385284739462296}
   - component: {fileID: 2724273822633899839}
   - component: {fileID: 3397233906220419325}
   - component: {fileID: 5386495958611337114}
@@ -2475,9 +2476,57 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3397233906220419312}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d433a8e8e03cf6e419501e9d96b5c4ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivots: []
+  Sound: {fileID: 8832462654530536994}
+  Tick: {fileID: 1547757722429121051}
+  RigidBody: {fileID: 3397233906220419325}
+  Mode: {fileID: 6016535094148757233}
+  Forward: {fileID: 2359199046088103861}
+  Clockwise: {fileID: 5189288603425430177}
+  Anticlockwise: {fileID: 1318617981485571579}
+  Reverse: {fileID: 5558057906972213541}
+  Preset: {fileID: 8401590605516501969}
+  Discrete: {fileID: 8755280396650023860}
+  Slow: {fileID: 3677079600789697506}
+  Med: {fileID: 3583353475161272748}
+  Fast: {fileID: 4160561189903912074}
+  Max: {fileID: 3732725402493709353}
+  Forward_P: {fileID: 8202941336374402639}
+  Clockwise_P: {fileID: 7256801091128982181}
+  Anticlockwise_P: {fileID: 681680321375567245}
+  Reverse_P: {fileID: 8052775756373396204}
+  One_Meter: {fileID: 556351986749679396}
+  Ten_Centimeters: {fileID: 1456582971972078855}
+  Five_Meters: {fileID: 7992507991635846202}
+  Ninety_Degrees: {fileID: 113327858045936531}
+  Fourty_Five_Degrees: {fileID: 3285951048280285304}
+  Ten_Degrees: {fileID: 6607683946052500833}
+  Display: {fileID: 3944534261301136541}
+  SwitchTime: {fileID: 4205388188338958740}
+  Speed: 2
+  Drag: 1
+  AngularDrag: 0.05
+  Timer: 0
+  SwitchSpeed: 3
+  decay: 0
+  Active: 0
+  translate: 0
+  ActiveState: 0
+--- !u!114 &969385284739462296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3397233906220419312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c069b6afee91f4386d23f4b8fb550b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pivots: []
@@ -2523,7 +2572,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3397233906220419312}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddb75170a74cadf468d73c1cf591cc86, type: 3}
   m_Name: 
@@ -8042,11 +8091,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3397233906220419315}
     m_Modifications:
-    - target: {fileID: 1434837984410297857, guid: c4e2b7df91b433544b910a5ae6ee070d,
-        type: 3}
-      propertyPath: m_Name
-      value: Wheelchair
-      objectReference: {fileID: 0}
     - target: {fileID: 6529465978607897604, guid: c4e2b7df91b433544b910a5ae6ee070d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8101,6 +8145,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434837984410297857, guid: c4e2b7df91b433544b910a5ae6ee070d,
+        type: 3}
+      propertyPath: m_Name
+      value: Wheelchair
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4e2b7df91b433544b910a5ae6ee070d, type: 3}
