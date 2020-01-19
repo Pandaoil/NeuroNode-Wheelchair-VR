@@ -2560,7 +2560,7 @@ MonoBehaviour:
   Drag: 1
   AngularDrag: 0.05
   Timer: 0
-  SwitchSpeed: 3
+  SwitchSpeed: 1
   decay: 0
   Active: 0
   translate: 0
@@ -8091,6 +8091,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3397233906220419315}
     m_Modifications:
+    - target: {fileID: 1434837984410297857, guid: c4e2b7df91b433544b910a5ae6ee070d,
+        type: 3}
+      propertyPath: m_Name
+      value: Wheelchair
+      objectReference: {fileID: 0}
     - target: {fileID: 6529465978607897604, guid: c4e2b7df91b433544b910a5ae6ee070d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8145,11 +8150,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1434837984410297857, guid: c4e2b7df91b433544b910a5ae6ee070d,
-        type: 3}
-      propertyPath: m_Name
-      value: Wheelchair
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4e2b7df91b433544b910a5ae6ee070d, type: 3}

@@ -193,15 +193,11 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.R_Anticlockwise:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
                         //The body of this if statement will cease all force applied to the rigidbody and then apply a force on the inverse vector
                         transform.Rotate(0, -10 * Speed * Time.deltaTime, 0);
-
-                        if (Input.GetKeyUp(KeyCode.Space))
-                        {
-                            ActiveState = ScanAction.Forward;
-                        }
+                        Timer = 0;
                     }
 
                     Timer += Time.deltaTime;
@@ -220,15 +216,11 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Reverse:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
                         //The body of this if statement will cease all angular velocity and apply a backward vector
                         transform.Translate(0, 0, -1 * Speed * Time.deltaTime);
-
-                        if (Input.GetKeyUp(KeyCode.Space))
-                        {
-                            ActiveState = ScanAction.Forward;
-                        }
+                        Timer = 0;
                     }
 
                     Timer += Time.deltaTime;
@@ -252,6 +244,7 @@ public class NeuroNode_Controller : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         ActiveState = ScanAction.Presets;
+                        Timer = 0;
                         Mode.SetActive(false);
                         Preset.SetActive(true);
                     }
@@ -276,6 +269,7 @@ public class NeuroNode_Controller : MonoBehaviour
                     {
                         Preset.SetActive(false);
                         Forward_P.SetActive(true);
+                        Timer = 0;
                         ActiveState = ScanAction.Forward_P;
                         Sound.Play();
                     }
@@ -301,6 +295,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Slow.SetActive(false);
                         Forward.SetActive(true);
                         SwitchSpeed = 3.0f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward;
                     }
 
@@ -325,6 +320,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Med.SetActive(false);
                         Forward.SetActive(true);
                         SwitchSpeed = 2.0f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward;
                     }
 
@@ -349,6 +345,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Fast.SetActive(false);
                         Forward.SetActive(true);
                         SwitchSpeed = 1.0f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward;
                     }
 
@@ -373,6 +370,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Max.SetActive(false);
                         Forward.SetActive(true);
                         SwitchSpeed = 0.5f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward;
                     }
 
@@ -396,7 +394,7 @@ public class NeuroNode_Controller : MonoBehaviour
                 {
 
 
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Active == true)
                     {
                         decay = 0.01f;
                         translate = true;
@@ -404,6 +402,7 @@ public class NeuroNode_Controller : MonoBehaviour
 
                         if (decay == 0 && !translate)
                         {
+                            Active = false;
                             Forward_P.SetActive(false);
                             One_Meter.SetActive(true);
                             ActiveState = ScanAction.One_Meter;
@@ -428,25 +427,24 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.One_Meter:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+
+                    if (Active == true)
                     {
-                        if (Active == true)
+                        transform.Translate(0, 0, 2 * Time.deltaTime);
+                        temp += Time.deltaTime;
+                        Timer = 0;
+
+                        if (temp >= 0.5)
                         {
-                            transform.Translate(0, 0, 1 * Time.deltaTime);
-                            temp += Time.deltaTime;
-                            Timer = 0;
-
-                            if (temp >= 1)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                One_Meter.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                            ActiveState = ScanAction.Forward_P;
+                            One_Meter.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
-
                     }
+
+
 
                     Timer += Time.deltaTime;
 
@@ -454,78 +452,6 @@ public class NeuroNode_Controller : MonoBehaviour
                     {
                         //This will change the Active State to be the next one
                         One_Meter.SetActive(false);
-                        Ten_Centimeters.SetActive(true);
-                        ActiveState = ScanAction.Ten_Centimeter;
-                        Timer = 0;
-                        Tick.Play();
-                    }
-
-                }
-                break;
-
-            case ScanAction.Five_Meter:
-                {
-                    if (Input.GetKey(KeyCode.Space))
-                    {
-                        if (Active == true)
-                        {
-                            transform.Translate(0, 0, 1 * Time.deltaTime);
-                            temp += Time.deltaTime;
-                            Timer = 0;
-
-                            if (temp >= 5)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Five_Meters.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
-                        }
-                    }
-
-                    Timer += Time.deltaTime;
-
-                    if (Timer >= SwitchSpeed)
-                    {
-                        //This will change the Active State to be the next one
-                        Five_Meters.SetActive(false);
-                        One_Meter.SetActive(true);
-                        ActiveState = ScanAction.One_Meter;
-                        Timer = 0;
-                        Tick.Play();
-                    }
-
-                }
-                break;
-
-            case ScanAction.Ten_Centimeter:
-                {
-                    if (Input.GetKey(KeyCode.Space))
-                    {
-                        if (Active == true)
-                        {
-                            transform.Translate(0, 0, 1 * Time.deltaTime);
-                            temp += Time.deltaTime;
-                            Timer = 0;
-
-                            if (temp >= 0.1)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Ten_Centimeters.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
-                        }
-                    }
-
-                    Timer += Time.deltaTime;
-
-                    if (Timer >= SwitchSpeed)
-                    {
-                        //This will change the Active State to be the next one
-                        Ten_Centimeters.SetActive(false);
                         Five_Meters.SetActive(true);
                         ActiveState = ScanAction.Five_Meter;
                         Timer = 0;
@@ -535,23 +461,90 @@ public class NeuroNode_Controller : MonoBehaviour
                 }
                 break;
 
+            case ScanAction.Five_Meter:
+                {
+                    if (Active == true)
+                    {
+                        transform.Translate(0, 0, 2 * Time.deltaTime);
+                        temp += Time.deltaTime;
+                        Timer = 0;
+
+                        if (temp >= 2.5)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Five_Meters.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
+                        }
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        Five_Meters.SetActive(false);
+                        Ten_Centimeters.SetActive(true);
+                        ActiveState = ScanAction.Ten_Centimeter;
+                        Timer = 0;
+                        Tick.Play();
+                    }
+
+                }
+                break;
+
+            case ScanAction.Ten_Centimeter:
+                {
+                    if (Active == true)
+                    {
+
+                        transform.Translate(0, 0, 1 * Time.deltaTime);
+                        temp += Time.deltaTime;
+                        Timer = 0;
+
+                        if (temp >= 0.1)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Ten_Centimeters.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
+                        }
+
+                    }
+
+                    Timer += Time.deltaTime;
+
+                    if (Timer >= SwitchSpeed)
+                    {
+                        //This will change the Active State to be the next one
+                        Ten_Centimeters.SetActive(false);
+                        One_Meter.SetActive(true);
+                        ActiveState = ScanAction.One_Meter;
+                        Timer = 0;
+                        Tick.Play();
+                    }
+
+                }
+                break;
+
             case ScanAction.Clockwise_P:
                 {
-
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Active == true)
                     {
-                        decay = 0.015f;
+                        decay = 0.01f;
                         translate = true;
                         Delay();
 
                         if (decay == 0 && !translate)
                         {
+                            Active = false;
                             ActiveState = ScanAction.Ninety_R;
                             Clockwise_P.SetActive(false);
                             Ninety_Degrees.SetActive(true);
                             Timer = 0;
                         }
-
                     }
 
                     Timer += Time.deltaTime;
@@ -571,23 +564,22 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Ninety_R:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Rotate(0, 20 * Time.deltaTime, 0);
-                            temp += Time.deltaTime;
-                            Timer = 0;
 
-                            if (temp >= 4.5)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Ninety_Degrees.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                        transform.Rotate(0, 20 * Time.deltaTime, 0);
+                        temp += Time.deltaTime;
+                        Timer = 0;
+
+                        if (temp >= 4.5)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Ninety_Degrees.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
+
                     }
 
                     Timer += Time.deltaTime;
@@ -607,24 +599,23 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Fourty_Five_R:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Rotate(0, 10 * Time.deltaTime, 0);
-                            temp += Time.deltaTime;
-                            Timer = 0;
 
-                            if (temp >= 4.5f)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Fourty_Five_Degrees.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                                Tick.Play();
-                            }
+                        transform.Rotate(0, 20 * Time.deltaTime, 0);
+                        temp += Time.deltaTime;
+                        Timer = 0;
+
+                        if (temp >= 2.25f)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Fourty_Five_Degrees.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
+                            Tick.Play();
                         }
+
                     }
 
                     Timer += Time.deltaTime;
@@ -643,23 +634,22 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Ten_R:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Rotate(0, 10 * Time.deltaTime, 0);
-                            temp += Time.deltaTime;
-                            Timer = 0;
 
-                            if (temp >= 1)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Ten_Degrees.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                        transform.Rotate(0, 20 * Time.deltaTime, 0);
+                        temp += Time.deltaTime;
+                        Timer = 0;
+
+                        if (temp >= 0.5)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Ten_Degrees.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
+
                     }
 
                     Timer += Time.deltaTime;
@@ -679,25 +669,21 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Anticlockwise_P:
                 {
-
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Active == true)
                     {
+                        decay = 0.01f;
+                        translate = true;
+                        Delay();
 
-                        if (Input.GetKeyDown(KeyCode.Space))
+                        if (decay == 0 && !translate)
                         {
-                            decay = 0.015f;
-                            translate = true;
-                            Delay();
-
-                            if (decay == 0 && !translate)
-                            {
-                                ActiveState = ScanAction.Ninety_L;
-                                Anticlockwise_P.SetActive(false);
-                                Ninety_Degrees.SetActive(true);
-                                Timer = 0;
-                            }
-
+                            Active = false;
+                            ActiveState = ScanAction.Ninety_L;
+                            Anticlockwise_P.SetActive(false);
+                            Ninety_Degrees.SetActive(true);
+                            Timer = 0;
                         }
+
                     }
 
                     Timer += Time.deltaTime;
@@ -717,22 +703,19 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Ninety_L:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Rotate(0, -20 * Time.deltaTime, 0);
-                            temp += Time.deltaTime;
-                            Timer = 0;
+                        transform.Rotate(0, -20 * Time.deltaTime, 0);
+                        temp += Time.deltaTime;
+                        Timer = 0;
 
-                            if (temp >= 4.5)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Ninety_Degrees.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                        if (temp >= 4.5)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Ninety_Degrees.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
                     }
 
@@ -753,22 +736,19 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Fourty_Five_L:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Rotate(0, -10 * Time.deltaTime, 0);
-                            temp += Time.deltaTime;
-                            Timer = 0;
+                        transform.Rotate(0, -20 * Time.deltaTime, 0);
+                        temp += Time.deltaTime;
+                        Timer = 0;
 
-                            if (temp >= 4.5f)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Fourty_Five_Degrees.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                        if (temp >= 2.25)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Fourty_Five_Degrees.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
                     }
 
@@ -789,22 +769,19 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Ten_L:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Rotate(0, -10 * Time.deltaTime, 0);
-                            temp += Time.deltaTime;
-                            Timer = 0;
+                        transform.Rotate(0, -20 * Time.deltaTime, 0);
+                        temp += Time.deltaTime;
+                        Timer = 0;
 
-                            if (temp >= 1)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Ten_Degrees.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                        if (temp >= 0.5)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Ten_Degrees.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
                     }
 
@@ -825,25 +802,21 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Reverse_P:
                 {
-
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Active == true)
                     {
+                        decay = 0.01f;
+                        translate = true;
+                        Delay();
 
-                        if (Input.GetKeyDown(KeyCode.Space))
+                        if (decay == 0 && !translate)
                         {
-                            decay = 0.015f;
-                            translate = true;
-                            Delay();
-
-                            if (decay == 0 && !translate)
-                            {
-                                ActiveState = ScanAction.One_Meter_R;
-                                Reverse_P.SetActive(false);
-                                One_Meter.SetActive(true);
-                                Timer = 0;
-                            }
-
+                            Active = false;
+                            ActiveState = ScanAction.One_Meter_R;
+                            Reverse_P.SetActive(false);
+                            One_Meter.SetActive(true);
+                            Timer = 0;
                         }
+
                     }
 
                     Timer += Time.deltaTime;
@@ -863,24 +836,20 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.One_Meter_R:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
+                        transform.Translate(0, 0, -2 * Time.deltaTime);
+                        temp += Time.deltaTime;
+                        Timer = 0;
+
+                        if (temp >= 0.5)
                         {
-                            transform.Translate(0, 0, -1 * Time.deltaTime);
-                            temp += Time.deltaTime;
-                            Timer = 0;
-
-                            if (temp >= 1)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                One_Meter.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                            ActiveState = ScanAction.Forward_P;
+                            One_Meter.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
-
                     }
 
                     Timer += Time.deltaTime;
@@ -889,8 +858,8 @@ public class NeuroNode_Controller : MonoBehaviour
                     {
                         //This will change the Active State to be the next one
                         One_Meter.SetActive(false);
-                        Ten_Centimeters.SetActive(true);
-                        ActiveState = ScanAction.Ten_Centimeter_R;
+                        Five_Meters.SetActive(true);
+                        ActiveState = ScanAction.Five_Meter_R;
                         Timer = 0;
                         Tick.Play();
                     }
@@ -900,22 +869,19 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Five_Meter_R:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Translate(0, 0, -1 * Time.deltaTime);
-                            temp += Time.deltaTime;
-                            Timer = 0;
+                        transform.Translate(0, 0, -2 * Time.deltaTime);
+                        temp += Time.deltaTime;
+                        Timer = 0;
 
-                            if (temp >= 5)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Five_Meters.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                        if (temp >= 2.5)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Five_Meters.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
                     }
 
@@ -925,8 +891,8 @@ public class NeuroNode_Controller : MonoBehaviour
                     {
                         //This will change the Active State to be the next one
                         Five_Meters.SetActive(false);
-                        One_Meter.SetActive(true);
-                        ActiveState = ScanAction.One_Meter_R;
+                        Ten_Centimeters.SetActive(true);
+                        ActiveState = ScanAction.Ten_Centimeter_R;
                         Timer = 0;
                         Tick.Play();
                     }
@@ -936,22 +902,19 @@ public class NeuroNode_Controller : MonoBehaviour
 
             case ScanAction.Ten_Centimeter_R:
                 {
-                    if (Input.GetKey(KeyCode.Space))
+                    if (Active == true)
                     {
-                        if (Active == true)
-                        {
-                            transform.Translate(0, 0, -1 * Time.deltaTime);
-                            temp += Time.deltaTime;
-                            Timer = 0;
+                        transform.Translate(0, 0, -1 * Time.deltaTime);
+                        temp += Time.deltaTime;
+                        Timer = 0;
 
-                            if (temp >= 0.1)
-                            {
-                                ActiveState = ScanAction.Forward_P;
-                                Ten_Centimeters.SetActive(false);
-                                Forward_P.SetActive(true);
-                                Active = false;
-                                temp = 0;
-                            }
+                        if (temp >= 0.1)
+                        {
+                            ActiveState = ScanAction.Forward_P;
+                            Ten_Centimeters.SetActive(false);
+                            Forward_P.SetActive(true);
+                            Active = false;
+                            temp = 0;
                         }
                     }
 
@@ -961,8 +924,8 @@ public class NeuroNode_Controller : MonoBehaviour
                     {
                         //This will change the Active State to be the next one
                         Ten_Centimeters.SetActive(false);
-                        Five_Meters.SetActive(true);
-                        ActiveState = ScanAction.Five_Meter_R;
+                        One_Meter.SetActive(true);
+                        ActiveState = ScanAction.One_Meter_R;
                         Timer = 0;
                         Tick.Play();
                     }
@@ -1001,6 +964,7 @@ public class NeuroNode_Controller : MonoBehaviour
                     {
                         Discrete.SetActive(false);
                         Forward.SetActive(true);
+                        Timer = 0;
                         ActiveState = ScanAction.Forward;
                     }
 
@@ -1025,6 +989,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Slow.SetActive(false);
                         Forward_P.SetActive(true);
                         SwitchSpeed = 3.0f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward_P;
                     }
 
@@ -1049,6 +1014,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Med.SetActive(false);
                         Forward_P.SetActive(true);
                         SwitchSpeed = 2.0f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward_P;
                     }
 
@@ -1073,6 +1039,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Fast.SetActive(false);
                         Forward_P.SetActive(true);
                         SwitchSpeed = 1.0f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward_P;
                     }
 
@@ -1097,6 +1064,7 @@ public class NeuroNode_Controller : MonoBehaviour
                         Max.SetActive(false);
                         Forward_P.SetActive(true);
                         SwitchSpeed = 0.5f;
+                        Timer = 0;
                         ActiveState = ScanAction.Forward_P;
                     }
 
