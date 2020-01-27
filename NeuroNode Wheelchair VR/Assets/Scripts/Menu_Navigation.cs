@@ -22,4 +22,9 @@ public class Menu_Navigation : MonoBehaviour
     {
         SceneManager.LoadScene(theLevel);
     }
+
+    public void Changescene()
+    {
+        SceneManager.LoadScene(theLevel);
+    }
 }
