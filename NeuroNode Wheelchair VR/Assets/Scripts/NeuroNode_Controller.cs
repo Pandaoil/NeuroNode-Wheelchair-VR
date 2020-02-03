@@ -105,6 +105,26 @@ public class NeuroNode_Controller : MonoBehaviour
             Sound.Play();
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Sound.Play();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Sound.Play();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            Sound.Play();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            Sound.Play();
+        }
+
         void Delay()
         {
             decay -= Time.deltaTime;
@@ -127,6 +147,90 @@ public class NeuroNode_Controller : MonoBehaviour
             }
 
             else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (Active == true)
+                {
+                    Active = false;
+
+                    Debug.Log("Not Active");
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (Active == false)
+            {
+                Active = true;
+
+                Debug.Log("Active");
+
+            }
+
+            else if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                if (Active == true)
+                {
+                    Active = false;
+
+                    Debug.Log("Not Active");
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (Active == false)
+            {
+                Active = true;
+
+                Debug.Log("Active");
+
+            }
+
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                if (Active == true)
+                {
+                    Active = false;
+
+                    Debug.Log("Not Active");
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (Active == false)
+            {
+                Active = true;
+
+                Debug.Log("Active");
+
+            }
+
+            else if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                if (Active == true)
+                {
+                    Active = false;
+
+                    Debug.Log("Not Active");
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            if (Active == false)
+            {
+                Active = true;
+
+                Debug.Log("Active");
+
+            }
+
+            else if (Input.GetKeyDown(KeyCode.F12))
             {
                 if (Active == true)
                 {
